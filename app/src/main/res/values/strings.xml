@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">BulllsEye</string>
+    <string name="instruction_text">PUT THE BULLSEYE AS CLOSE AS YOU CAN TO</string>
+    <string name="min_value_text">1</string>
+    <string name="max_value_text">100</string>
+    <string name="target_value_text">89</string>
+    <string name="hit_me_button_text">Hit Me</string>
+    <string name="result_dialog_button_text">Awesome!</string>
+    <string name="result_dialog_title">Yello People</string>
+    <string name="result_dialog_message">This my first compose pickup</string>
 </resources>

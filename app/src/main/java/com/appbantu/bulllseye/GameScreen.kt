@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,13 +27,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.appbantu.bulllseye.ui.theme.BulllsEyeTheme
+import kotlin.math.roundToInt
+import kotlin.random.Random
 
 @Composable
 fun GameScreen() {
 //    var alertIsVisble: Boolean = false
     //Compose
-    var alertIsVisble by remember { mutableStateOf(false) }
-
+    var alertIsVisble by rememberSaveable { mutableStateOf(false) }
+    var sliderValue by rememberSaveable { mutableStateOf(0.5f) }
+    val sliderValueToInt = (sliderValue * 100).toInt()
+//    var targetValue = (0..100).random()
+    var targetValue by remember { mutableStateOf((0..100).random()) }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -47,30 +53,14 @@ fun GameScreen() {
             verticalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier.weight(9f)
         ) {
-            Text(stringResource(R.string.instruction_text))
-            Text(stringResource(R.string.target_value_text), fontSize = 32.sp, fontWeight = FontWeight.Bold)
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    stringResource(R.string.min_value_text),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(start = 16.dp)
-                )
-                Slider(value = 0.5f,
-                    valueRange = 0.01f..1f,
-                    onValueChange = {},
-                    modifier = Modifier.weight(1f)
-                )
-                Text(
-                    stringResource(R.string.max_value_text),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(end = 16.dp)
-                )
+            GamePrompt(value = targetValue)
+            TargetSlider(
+                value = sliderValue,
+                valueChange = { newValue ->
+                sliderValue = newValue
             }
+            )
             Button(onClick = {
-//                Log.d("Button Click Event", "You Clicked the Hit Me Button");
-
                 Log.d("Alert Is Visblet", alertIsVisble.toString());
                     alertIsVisble = true
             }) {
@@ -82,7 +72,8 @@ fun GameScreen() {
         if (alertIsVisble) {
             ResultDialog(hideDialog = {
                 alertIsVisble = false
-            })
+            },
+          selection = sliderValueToInt)
         }
     }
 }

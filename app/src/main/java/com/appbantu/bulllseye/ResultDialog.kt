@@ -10,6 +10,7 @@ import androidx.compose.ui.res.stringResource
 @Composable
 fun ResultDialog(
     hideDialog: () -> Unit,
+    selection : Int,
     modifier: Modifier = Modifier
 ) {
 AlertDialog(onDismissRequest = {
@@ -23,6 +24,7 @@ AlertDialog(onDismissRequest = {
         }
     },
     title = { Text(text = stringResource(R.string.result_dialog_title)) },
-    text = { Text(text = stringResource(R.string.result_dialog_message)) }
+    text = { Text(text = stringResource(R.string.result_dialog_message, selection)) },
+//    text = { Text(text = "You picked $selection") }
 )
 }
